@@ -4,10 +4,12 @@ import * as network from '@/lib/supabase/network';
 
 export async function loadNetworkState(): Promise<{ follows: Follow[]; invites: Invite[] }> {
   if (!supabaseEnabled) return { follows: [], invites: [] };
+
   const [follows, invites] = await Promise.all([
     network.getFollows(),
-    network.getInvites()
+    network.getInvites(),
   ]);
+
   return { follows, invites };
 }
 
