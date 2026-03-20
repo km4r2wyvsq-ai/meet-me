@@ -175,5 +175,6 @@ export const initialState: AppState = {
     { followerUsername: 'demo-user', followingUsername: 'devshah', createdAt: 'Today' },
     { followerUsername: 'demo-user', followingUsername: 'ava', createdAt: 'Today' }
   ],
-  feedMode: 'for-you'
+  feedMode: 'for-you',
+  networkMode: 'demo'
 };
