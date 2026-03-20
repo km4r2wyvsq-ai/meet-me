@@ -2,15 +2,50 @@
 @tailwind components;
 @tailwind utilities;
 
-:root { color-scheme: light; }
-html, body { min-height: 100%; }
-body { @apply bg-slate-50 text-slate-900 antialiased; }
-* { @apply border-slate-200; }
-input, textarea, select { @apply w-full rounded-2xl border bg-white px-4 py-3 outline-none transition focus:border-brand focus:ring-4 focus:ring-brand/10; }
-button { @apply transition; }
-.gradient-bg {
-  background:
-    radial-gradient(circle at top left, rgba(124,58,237,0.16), transparent 35%),
-    radial-gradient(circle at bottom right, rgba(59,130,246,0.14), transparent 30%),
-    #f8fafc;
+:root {
+  color-scheme: light;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: Inter, Arial, sans-serif;
+  background: #f8fafc;
+  color: #0f172a;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+input,
+textarea,
+select,
+button {
+  font: inherit;
+}
+
+input,
+textarea,
+select {
+  width: 100%;
+  border: 1px solid #e2e8f0;
+  background: white;
+  border-radius: 16px;
+  padding: 12px 14px;
+  outline: none;
+}
+
+textarea {
+  resize: vertical;
+}
+
+button {
+  cursor: pointer;
 }
