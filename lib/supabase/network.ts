@@ -2,7 +2,9 @@ import { supabase, supabaseEnabled } from '@/lib/supabase/client';
 import type { Follow, Invite, AnalyticsEvent, NotificationItem } from '@/lib/types';
 
 function requireClient() {
-  if (!supabaseEnabled || !supabase) throw new Error('Supabase is not enabled.');
+  if (!supabaseEnabled || !supabase) {
+    throw new Error('Supabase is not enabled.');
+  }
   return supabase;
 }
 
@@ -125,9 +127,8 @@ export async function getInvites(): Promise<Invite[]> {
   return (data ?? []).map((row: any) => ({
     id: row.id,
     groupId: row.group_id,
-    groupName: Array.isArray(row.groups)
-      ? (row.groups[0]?.name ?? 'Group')
-      : (row.groups?.name ?? 'Group'),
+    groupName:
+      ((row.groups as Array<{ name?: string }> | null | undefined)?.[0]?.name) ?? 'Group',
     code: row.code,
     createdAt: new Date(row.created_at).toLocaleString(),
     acceptedCount: Array.isArray(row.invite_acceptances) ? row.invite_acceptances.length : 0,
@@ -184,9 +185,8 @@ export async function acceptInvite(code: string) {
 
   if (inviteError) throw inviteError;
 
-  const groupName = Array.isArray(invite.groups)
-    ? (invite.groups[0]?.name ?? 'a group')
-    : (invite.groups?.name ?? 'a group');
+  const groupName =
+    ((invite.groups as Array<{ name?: string }> | null | undefined)?.[0]?.name) ?? 'a group';
 
   const { error: acceptanceError } = await client
     .from('invite_acceptances')
@@ -196,7 +196,11 @@ export async function acceptInvite(code: string) {
 
   const { error: membershipError } = await client
     .from('group_members')
-    .upsert({ group_id: invite.group_id, profile_id: user.id, role: 'member' });
+    .upsert({
+      group_id: invite.group_id,
+      profile_id: user.id,
+      role: 'member',
+    });
 
   if (membershipError) throw membershipError;
 
