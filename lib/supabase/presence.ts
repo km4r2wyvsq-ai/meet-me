@@ -9,7 +9,9 @@ export function createPresenceChannel(
     return () => {};
   }
 
-  const channel = supabase.channel(`presence:${groupId}`, {
+  const client = supabase;
+
+  const channel = client.channel(`presence:${groupId}`, {
     config: {
       presence: {
         key: username,
@@ -33,6 +35,6 @@ export function createPresenceChannel(
     });
 
   return () => {
-    void supabase.removeChannel(channel);
+    void client.removeChannel(channel);
   };
 }
