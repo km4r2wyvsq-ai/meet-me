@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root { color-scheme: light; }
+html, body { min-height: 100%; }
+body { @apply bg-slate-50 text-slate-900 antialiased; }
+* { @apply border-slate-200; }
+input, textarea, select { @apply w-full rounded-2xl border bg-white px-4 py-3 outline-none transition focus:border-brand focus:ring-4 focus:ring-brand/10; }
+button { @apply transition; }
+.gradient-bg {
+  background:
+    radial-gradient(circle at top left, rgba(124,58,237,0.16), transparent 35%),
+    radial-gradient(circle at bottom right, rgba(59,130,246,0.14), transparent 30%),
+    #f8fafc;
+}
