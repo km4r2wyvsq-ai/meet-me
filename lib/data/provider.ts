@@ -1,35 +1,41 @@
 import { initialState } from '@/lib/seed';
-import type { AppState, Group, UserProfile } from '@/lib/types';
-import { supabaseEnabled } from '@/lib/supabase/client';
-import * as repo from '@/lib/supabase/repository';
+import type { AppState } from '@/lib/types';
 
-export async function loadInitialAppState(): Promise<AppState> {
-  if (!supabaseEnabled) return initialState;
-
-  const [profile, groups, posts] = await Promise.all([
-    repo.getSessionProfile(),
-    repo.getGroups(),
-    repo.getPosts()
-  ]);
+export async function getInitialAppState(): Promise<AppState> {
+  const profile = initialState.profile;
+  const groups = initialState.groups;
+  const posts = initialState.posts;
+  const comments = initialState.comments;
+  const messages = initialState.messages;
+  const notifications = initialState.notifications;
+  const reports = initialState.reports;
+  const analyticsEvents = initialState.analyticsEvents;
+  const searchQuery = initialState.searchQuery;
+  const searchResults = initialState.searchResults;
+  const presenceByGroup = initialState.presenceByGroup;
+  const invites = initialState.invites;
+  const recommendations = initialState.recommendations;
+  const follows = initialState.follows;
+  const feedMode = initialState.feedMode;
+  const networkMode = initialState.networkMode;
 
   return {
     authenticated: Boolean(profile),
     profile: profile ?? initialState.profile,
     groups,
     posts,
-    messages: initialState.messages,
-    notifications: await repo.getNotifications(),
-    reports: await repo.getReports(),
-    analyticsEvents: initialState.analyticsEvents
+    comments,
+    messages,
+    notifications,
+    reports,
+    analyticsEvents,
+    searchQuery,
+    searchResults,
+    presenceByGroup,
+    invites,
+    recommendations,
+    follows,
+    feedMode,
+    networkMode,
   };
-}
-
-export async function refreshGroups(): Promise<Group[]> {
-  if (!supabaseEnabled) return initialState.groups;
-  return repo.getGroups();
-}
-
-export async function refreshProfile(): Promise<UserProfile | null> {
-  if (!supabaseEnabled) return initialState.profile;
-  return repo.getSessionProfile();
 }
